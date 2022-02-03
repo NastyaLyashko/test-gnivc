@@ -1,121 +1,88 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Form.css';
 
-export default function Form () {
-
-    const [isActive, setIsActive] = useState(false);
+export default function Form ({ changeWord, text, newWord }) {
 
     const [word, setWord] = useState('');
-    const [gramCase, setGramCase] = useState('именительном');
-    const [newWord, setNewWord] = useState(word);
+    const [gramCase, setGramCase] = useState('0');
+    const [error, setError] = useState('');
 
     function handleChangeWord (e) {
-        setWord(e.target.value);
-        setNewWord(e.target.value)
+        const newWord = e.target.value
+        if (newWord.match(/[-.?!)(,:\s\d]/)) {
+            setError('Вводите только буквы, пожалуйста')
+        } else if (newWord.match(/[^а-яА-яёЁ]/)) {
+            setError('Пока меняем падежи только на русском, смените расскладку.')
+        } else {
+            setWord(newWord.toLowerCase());
+            setError('')
+        }
     }
 
     function handleChangeGramCase (e) {
         setGramCase(e.target.value);
     }
 
-    useEffect(() => {
-        if (word !== '') {
-            setIsActive(true);
-        } else {
-            setIsActive(false);
-        }
-    }, [word])
+    function resetForm() {
+        setWord('')
+        setError('')
+        setGramCase('0')
+        setIsInputActive(false)
+        setIsCheckboxActive(false)
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
-        changeWord(word);
+        changeWord(word, gramCase);
+        resetForm()
     }
 
-    const newdeclension = lastLetter => 
-        (lastLetter === 'а') ? '1' :
-        (lastLetter === 'я') ? '2' :
-        (lastLetter === 'о') ? '3' :
-        (lastLetter === 'е') ? '4' :
-        (lastLetter === 'ь') ? '5' :
-        (lastLetter === 'у') ? '6' :
-        (lastLetter === 'и') ? '7' : '8';
+    const [isInputActive, setIsInputActive] = useState(false);
 
-    const rules = [
-        {'именительном': 'а',
-        'родительном': 'ы',
-        'дательном': 'е',
-        'винительном': 'у',
-        'творительном': 'ой',
-        'предложном': 'е',},
-        
-        {'именительном': 'я',
-        'родительном': 'и',
-        'дательном': 'е',
-        'винительном': 'ю',
-        'творительном': 'ей',
-        'предложном': 'е',}
-    ]
+    const handleBlure = () => (word !== '') ? setIsInputActive(true) : setIsInputActive(false)
 
-    const end = (declension, rules) =>  {
-        let end =
-        (declension === '1') ? rules[0] :
-        (declension === '2') ? rules[1] :
-        (declension === '3') ? rules[2] :
-        (declension === '4') ? rules[3] :
-        (declension === '5') ? rules[4] :
-        (declension === '6') ? rules[5] :
-        (declension === '7') ? rules[6] :
-        (declension === '8') ? rules[7] :
-        console.log('error');
-        return end[gramCase];
-    }
-
-
-    function changeWord(word) {
-        const arr = Array.from(word);
-        const lastIndex = arr.length - 1
-        const lastLetter = arr[lastIndex]
-        const decl = newdeclension(lastLetter)
-        const wordEnd = end(decl, rules)
-        arr.splice(lastIndex, 1, wordEnd)
-        let newWord = arr.join('')
-        setNewWord(newWord)
-        console.log(newWord)
-    }
-
+    const [isCheckboxActive , setIsCheckboxActive ] = useState(false);
 
     return (
         <section className="form">
             <form onSubmit={handleSubmit} className="form__container">
-                <h3 className="form__title">Хотите изменить падеж слова?</h3>
-                <div className={`${isActive ? "form__input-container_active" : ""} form__input-container`}>
-                    <label className={`${isActive ? "form__field_active" : ""} form__field`} htmlFor='word' >
+                <h3 className="form__title">Поменяем падеж?</h3>
+                <div className={`${isInputActive ? "form__input-container_active" : ""} form__input-container`}>
+                    <label className={`${isInputActive ? "form__field_active form__field_text-input_active" : ""} form__field form__field_text-input`} htmlFor='word' >
                         Введите существительное в именительном падеже
                     </label>
                     <input  value={word || ''}
                                 onChange={handleChangeWord}
+                                onBlur={handleBlure}
+                                onFocus={(()=> setIsInputActive(true))}
                                 type='text'
                                 name='word'
-                                className={`${isActive ? "form__input_active" : ""} form__input`}
+                                className={`${isInputActive? "form__input_active" : ""} form__input`}
                                 id='word'
                                 required
-                                
-                                minLength="3"
+                                minLength="2"
                                 maxLength="20"/>
+                    <span className='form__error'>{error}</span>
                 </div>
-                <label className="form__select-container ">
-                    Выбирете падеж:
-                    <select className="form__input" value={gramCase} onChange={handleChangeGramCase}>
-                        <option value="именительном">Именительный</option>
-                        <option value="родительном">Родительный</option>
-                        <option value="дательном">Дательный</option>
-                        <option value="винительном">Винительный</option>
-                        <option value="творительном">Творительный</option>
-                        <option value="предложном">Предложный</option>
+                <div className='form__input-container'>
+                    <label className={`${isCheckboxActive ? "form__field_active" : ""} form__field`}>
+                        Выбирете падеж:
+                    </label>
+                    <select className={`${isCheckboxActive ? "form__input_active" : ""} form__input`}
+                            value={gramCase} 
+                            onChange={handleChangeGramCase}
+                            onFocus={(() => setIsCheckboxActive(true))} >
+                        <option value="0">Именительный</option>
+                        <option value="1">Родительный</option>
+                        <option value="2">Дательный</option>
+                        <option value="3">Винительный</option>
+                        <option value="4">Творительный</option>
+                        <option value="5">Предложный</option>
                     </select>
-                </label>
-                <button type="submit" className='form__button form__button_active' >Изменить</button>
-                <p>Слово <b>{word}</b> в {gramCase} падеже: {newWord}</p>
+                </div>
+                <button type="submit" className={`${isInputActive && isCheckboxActive ? "form__button_active" : "form__button_inactive"} form__button` } >Изменить</button>
+                <span className='form__text'>{text}</span>
+                <span className='form__word'>{newWord}</span>
             </form>
         </section>
     )

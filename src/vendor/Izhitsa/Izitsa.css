@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'IzhitsaRegular';
+    font-style:  normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("IzhitsaRegular.eot");
+    src: url("./IzhitsaRegular.eot?#iefix")format("embedded-opentype"),
+    url("IzhitsaRegular.woff") format("woff"),
+    url("IzhitsaRegular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
