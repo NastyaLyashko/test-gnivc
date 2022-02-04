@@ -61,7 +61,7 @@ export default function Form ({ changeWord, text, newWord }) {
                                 id='word'
                                 required
                                 minLength="2"
-                                maxLength="20"/>
+                                maxLength="30"/>
                     <span className='form__error'>{error}</span>
                 </div>
                 <div className='form__input-container'>

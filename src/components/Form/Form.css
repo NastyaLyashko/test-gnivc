@@ -1,4 +1,6 @@
 .form {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     position: relative;
     height: 100vh;
@@ -6,7 +8,8 @@
 }
 
 .form__button {
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     font-weight: bold;
     font-size: 16px;
     line-height: 1.4;
@@ -17,10 +20,18 @@
     padding: 15px 20px;
     border: 1px solid #E0E0E0;
     border-radius: 10px;
+    -webkit-transition: opacity 1s linear;
+    -o-transition: opacity 1s linear;
     transition: opacity 1s linear;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     cursor: auto;
 }
 
@@ -40,10 +51,16 @@
 }
 
 .form__container {
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     margin: auto;
     padding: 30px;
     width: 100%;
@@ -71,8 +88,14 @@
 
 .form__field_text-input {
     position: absolute;
-    transform: translate(0, 18px) scale(1);
-    transform-origin: top left;
+    -webkit-transform: translate(0, 18px) scale(1);
+        -ms-transform: translate(0, 18px) scale(1);
+            transform: translate(0, 18px) scale(1);
+    -webkit-transform-origin: top left;
+        -ms-transform-origin: top left;
+            transform-origin: top left;
+    -webkit-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
     transition: all 0.2s ease-out;
     padding-left: 15px;
     color: #847E95;
@@ -83,18 +106,25 @@
 }
 
 .form__field_text-input_active {
-    transform: translate(0px, -32px);
+    -webkit-transform: translate(0px, -32px);
+        -ms-transform: translate(0px, -32px);
+            transform: translate(0px, -32px);
     padding: 0px;
 }
 
 .form__header {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
     margin-bottom: 15px;
 }
 
 .form__input {
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     font-weight: 500;
     font-size: 20px;
     line-height: 1.4;
@@ -117,8 +147,13 @@
 
 .form__input-container {
     position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     margin-bottom: 20px;
 }
 
