@@ -46,7 +46,7 @@ export default function Form ({ changeWord, text, newWord }) {
     return (
         <section className="form">
             <form onSubmit={handleSubmit} className="form__container">
-                <h3 className="form__title">Поменяем падеж?</h3>
+                <h3 className="form__title">Поиграй с падежами!</h3>
                 <div className={`${isInputActive ? "form__input-container_active" : ""} form__input-container`}>
                     <label className={`${isInputActive ? "form__field_active form__field_text-input_active" : ""} form__field form__field_text-input`} htmlFor='word' >
                         Введите существительное в именительном падеже
